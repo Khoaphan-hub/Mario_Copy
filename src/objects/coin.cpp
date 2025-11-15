@@ -1,0 +1,33 @@
+#include "include/objects/coin.hpp"
+#include "include/objects/object_manager.hpp"
+
+Coin::Coin(Vector2 Nposition, float Nscale) : GameObject(Nposition, Nscale) {
+  texture = &App.Resource().GetObject();
+  LoadFrameList("res/sprites/objects/block_objects.txt");
+}
+
+Coin::~Coin() {}
+
+void Coin::OnHit() {
+  if (is_destroyed)
+    return;
+  is_destroyed = true;
+  auto &objectManager = ObjectManager::GetInstance();
+  if (objectManager.GetGameManager()) {
+    objectManager.GetGameManager()->AddPoints(200);
+  }
+}
+
+void Coin::Update() {
+  frame = frame_list[10 + ((time / 5) % +8)];
+  GameObject::Update();
+}
+
+void Coin::Draw() {
+  if (!is_destroyed)
+    GameObject::Draw();
+}
+
+ObjectType Coin::GetType() {
+  return ObjectType::Coin;
+}

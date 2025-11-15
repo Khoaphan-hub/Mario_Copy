@@ -1,0 +1,22 @@
+#pragma once
+#include <memory>
+#include <vector>
+
+#include "include/core/scene.hpp"
+
+class SceneList {
+private:
+  std::vector<std::unique_ptr<Scene>> scenes_;
+
+public:
+  SceneList();
+  void Push(std::unique_ptr<Scene> scene);
+  void Pop();
+  Scene &Top();
+  Scene &Second();
+  size_t Size();
+
+  void Init();
+  void Update();
+  void Draw();
+};
